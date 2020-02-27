@@ -2,9 +2,11 @@
 
 namespace Morebec\DomSer\Normalization\Configuration;
 
-use Morebec\DomSer\Normalization\Transformer\AsIsPropertyValueTransformer;
+use Morebec\DomSer\Normalization\Transformer\NormalizationPropertyValueTransformer;
 use Morebec\DomSer\Normalization\Transformer\PropertyValueTransformerInterface;
+use Morebec\DomSer\ValueTransformer\AsIsValueTransformer;
 
+// TODO delete reference to normalizationDefinition
 class NormalizedPropertyDefinition
 {
     /**
@@ -41,7 +43,7 @@ class NormalizedPropertyDefinition
     {
         $this->normalizationDefinition = $normalizationDefinition;
         $this->propertyName = $propertyName;
-        $this->transformer = new AsIsPropertyValueTransformer();
+        $this->transformer = new NormalizationPropertyValueTransformer(new AsIsValueTransformer());
         $this->normalizedName = $propertyName;
         $this->bound = true;
     }

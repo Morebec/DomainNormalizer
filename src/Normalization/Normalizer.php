@@ -5,8 +5,7 @@ namespace Morebec\DomSer\Normalization;
 use Morebec\DomSer\Normalization\Configuration\NormalizedPropertyDefinition;
 use Morebec\DomSer\Normalization\Configuration\NormalizerConfiguration;
 use Morebec\DomSer\Normalization\Exception\NormalizationException;
-use Morebec\DomSer\Normalization\Transformer\TransformationContext;
-use Morebec\DomSer\ObjectAccessor\ObjectAccessor;
+use Morebec\DomSer\ObjectManipulation\ObjectAccessor;
 
 class Normalizer
 {
@@ -34,7 +33,7 @@ class Normalizer
             throw NormalizationException::ClassDefinitionNotFound($objectClass);
         }
 
-        $accessor = new ObjectAccessor($object);
+        $accessor = ObjectAccessor::access($object);
 
         $normalizedForm = [];
 
@@ -52,7 +51,7 @@ class Normalizer
             // Get property value
             $value = $propertyDefinition->isBound() ? $accessor->readProperty($propertyName) : null;
 
-            $context = new TransformationContext($propertyName, $value, $object, $this);
+            $context = new NormalizationContext($propertyName, $value, $object, $this);
             $normalizedForm[$propertyDefinition->getNormalizedName()] = $transformation->transform($context);
         }
 

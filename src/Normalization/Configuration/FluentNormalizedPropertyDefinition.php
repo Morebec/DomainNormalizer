@@ -3,12 +3,13 @@
 namespace Morebec\DomSer\Normalization\Configuration;
 
 use Closure;
-use Morebec\DomSer\Normalization\Transformer\AsIsPropertyValueTransformer;
-use Morebec\DomSer\Normalization\Transformer\ClosurePropertyValueTransformer;
-use Morebec\DomSer\Normalization\Transformer\NormalizeObjectPropertyArrayTransformation;
+use Morebec\DomSer\Normalization\Transformer\NormalizationClosurePropertyValueTransformer;
+use Morebec\DomSer\Normalization\Transformer\NormalizationPropertyValueTransformer;
+use Morebec\DomSer\Normalization\Transformer\NormalizeObjectArrayPropertyValueTransformer;
 use Morebec\DomSer\Normalization\Transformer\NormalizeObjectPropertyValueTransformer;
 use Morebec\DomSer\Normalization\Transformer\PropertyValueTransformerInterface;
-use Morebec\DomSer\Normalization\Transformer\StringPropertyValueTransformer;
+use Morebec\DomSer\ValueTransformer\AsIsValueTransformer;
+use Morebec\DomSer\ValueTransformer\StringValueTransformer;
 
 class FluentNormalizedPropertyDefinition extends NormalizedPropertyDefinition
 {
@@ -44,7 +45,7 @@ class FluentNormalizedPropertyDefinition extends NormalizedPropertyDefinition
      */
     public function asIs(): self
     {
-        $this->transformer = new AsIsPropertyValueTransformer();
+        $this->transformedWith(new NormalizationPropertyValueTransformer(new AsIsValueTransformer()));
 
         return $this;
     }
@@ -54,7 +55,7 @@ class FluentNormalizedPropertyDefinition extends NormalizedPropertyDefinition
      */
     public function asString(bool $preserveNull = true): self
     {
-        $this->transformer = new StringPropertyValueTransformer($preserveNull);
+        $this->transformer = new NormalizationPropertyValueTransformer(new StringValueTransformer($preserveNull));
 
         return $this;
     }
@@ -64,7 +65,7 @@ class FluentNormalizedPropertyDefinition extends NormalizedPropertyDefinition
      */
     public function asTransformed(string $className): self
     {
-        $this->transformer = new NormalizeObjectPropertyValueTransformer($className);
+        $this->transformedWith(new NormalizeObjectPropertyValueTransformer($className));
 
         return $this;
     }
@@ -74,7 +75,7 @@ class FluentNormalizedPropertyDefinition extends NormalizedPropertyDefinition
      */
     public function asArrayOfTransformed(string $className): self
     {
-        $this->transformer = new NormalizeObjectPropertyArrayTransformation($className);
+        $this->transformedWith(new NormalizeObjectArrayPropertyValueTransformer($className));
 
         return $this;
     }
@@ -84,7 +85,7 @@ class FluentNormalizedPropertyDefinition extends NormalizedPropertyDefinition
      */
     public function as(Closure $closure): self
     {
-        $this->transformedWith(new ClosurePropertyValueTransformer($closure));
+        $this->transformedWith(new NormalizationClosurePropertyValueTransformer($closure));
 
         return $this;
     }

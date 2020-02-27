@@ -4,11 +4,13 @@ namespace Tests\Morebec\DomSer\Normalization;
 
 use DateTime;
 use Morebec\DomSer\Normalization\Configuration\NormalizerConfiguration;
-use Morebec\DomSer\Normalization\Configuration\ObjectDefinitionFactory as DefinitionFactory;
+use Morebec\DomSer\Normalization\Configuration\ObjectNormalizationDefinitionFactory as DefinitionFactory;
 use Morebec\DomSer\Normalization\Configuration\ObjectNormalizationDefinition as Definition;
 use Morebec\DomSer\Normalization\Normalizer;
-use Morebec\DomSer\Normalization\Transformer\TransformationContext;
+use Morebec\DomSer\Normalization\NormalizationContext;
 use PHPUnit\Framework\TestCase;
+use Tests\Morebec\DomSer\TestClasses\TestOrderLineItem;
+use Tests\Morebec\DomSer\TestClasses\TestOrder;
 
 class NormalizerTest extends TestCase
 {
@@ -26,7 +28,7 @@ class NormalizerTest extends TestCase
                     ->renamedTo('ID')
                     ->asString();
 
-                $d->property('createdAt')->as(static function (TransformationContext $context) {
+                $d->property('createdAt')->as(static function (NormalizationContext $context) {
                     $value = $context->getValue();
                     return (new DateTime("@$value"))->format('Y-m-d');
                 });
@@ -35,7 +37,7 @@ class NormalizerTest extends TestCase
                     ->asArrayOfTransformed(TestOrderLineItem::class);
 
                 $d->createProperty('nbLineItems')
-                    ->as(static function(TransformationContext $context) {
+                    ->as(static function(NormalizationContext $context) {
                         return count($context->getObject()->getLineItems());
                     }
                 );

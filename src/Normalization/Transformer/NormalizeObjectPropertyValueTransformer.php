@@ -3,10 +3,10 @@
 namespace Morebec\DomSer\Normalization\Transformer;
 
 use Morebec\DomSer\Normalization\Exception\NormalizationException;
-use Morebec\DomSer\Normalization\Normalizer;
+use Morebec\DomSer\Normalization\NormalizationContext;
 
 /**
- * Transformer normalizing an object property value.
+ * Transformer normalizing an property value that has an object type.
  */
 class NormalizeObjectPropertyValueTransformer implements PropertyValueTransformerInterface
 {
@@ -28,7 +28,7 @@ class NormalizeObjectPropertyValueTransformer implements PropertyValueTransforme
     /**
      * {@inheritdoc}
      */
-    public function transform(TransformationContext $context)
+    public function transform(NormalizationContext $context)
     {
         $value = $context->getValue();
 

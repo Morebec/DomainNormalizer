@@ -5,7 +5,10 @@ domain classes, while providing a quick and easy way of defining primitive mappi
 
 It contains features for both serialization and deserialization (through normalization).
 
-## Normalization Example
+## Normalization
+Normalization is the process of transforming a Domain Object instance to an array representation of primitive (int,string,float.bool, array) values.
+This array representation is called a normalized form.
+
 Given a class structure like:
 ```php
 class Order
@@ -63,10 +66,10 @@ Using the following definition:
 ```php
 use DateTime;
 use Morebec\DomSer\Normalization\Configuration\NormalizerConfiguration;
-use Morebec\DomSer\Normalization\Configuration\ObjectDefinitionFactory as DefinitionFactory;
+use Morebec\DomSer\Normalization\Configuration\ObjectNormalizationDefinitionFactory as DefinitionFactory;
 use Morebec\DomSer\Normalization\Configuration\ObjectNormalizationDefinition as Definition;
 use Morebec\DomSer\Normalization\Normalizer;
-use Morebec\DomSer\Normalization\Transformer\TransformationContext;
+use Morebec\DomSer\Normalization\NormalizationContext;
 
 $config = new NormalizerConfiguration();
 
@@ -78,7 +81,7 @@ $config->registerDefinition(DefinitionFactory::forClass(
             ->renamedTo('ID')
             ->asString();
 
-        $d->property('createdAt')->as(static function (TransformationContext $context) {
+        $d->property('createdAt')->as(static function (NormalizationContext $context) {
             $value = $context->getValue();
             return (new DateTime("@$value"))->format('Y-m-d');
         });
@@ -87,7 +90,7 @@ $config->registerDefinition(DefinitionFactory::forClass(
             ->asArrayOfTransformed(OrderLineItem::class);
 
         $d->createProperty('nbLineItems')
-            ->as(static function(TransformationContext $context) {
+            ->as(static function(NormalizationContext $context) {
                 return count($context->getObject()->getLineItems());
             }
         );
@@ -108,7 +111,7 @@ $obj = new Order();
 $data = $normalizer->normalize($obj);
 ```
 
-Would return the following normalized map:
+Would return the following normalized form:
 
 ```php
 [
@@ -127,9 +130,7 @@ Would return the following normalized map:
 ];
 ```
 
-
 It is also possible to contain your definitions inside classes:
-
 ```php
 use Morebec\DomSer\Normalization\Configuration\ObjectNormalizationDefinition;
 
@@ -159,3 +160,57 @@ class OrderDefinition extends ObjectNormalizationDefinition
     }
 }
 ```
+
+The rules are simple:
+- If the normalizer cannot find a definition for a given object:
+    - It will look in its registry to find out if there is a definition for one of the object's parent class that it can use.
+    - Otherwise: It will throw an exception
+- Definitions follow an explicit declaration approach:
+    - If a property exists on the instance but is not part the definition, it will not be normalized. It will be ignored.
+    - If a property exists does not exists on the instance but is part of the definition:
+        - Unless it is a "bound" property, the normalizer will throw an exception.
+        - In the case of Bound properties, they will be added to the resulting normalized form.
+            (This can be defined either though the `bound` definition when using definition factory or through the `createProperty`)
+
+### Denormalization
+The process of denormalization is the opposite of normalization: Transforming a normalized form
+to a Domain Object Instance.
+
+In denormalization definitions, instead of defining properties, we define keys.
+
+The rules are similar to normalization but presets some subtle differences:
+- Definitions also follow an explicit declaration approach:
+    - If key exists on the normalized form but it not part of the definition, it will not be denormalized.
+    - Every nested normalized forms must have an associated definition.
+        - If none is found, the denormalizer will throw an exception.
+    - If a key definition exists but the associated data does not:
+        - It will apply the configured missing transformer which is usually to either throw an error, or provide a default value.
+           - By default it is to throw an error
+    - If a key definition exists, but no corresponding property exists on the class:   
+        - Throw an exception.
+    
+```php
+class OrderDenormalizationDefinition extends ObjectDenormalizationDefinition
+{
+    public function __construct()
+    {
+        parent::_construct(Order::class);
+        $this->key('ID')
+             ->renamedTo('id')
+             ->as(static function (TransformationContext $context) {
+                return new ProductId($context->getValue());  
+            }
+        );
+        
+        $this->key('createdAt')->as(static function (TransformationContext $context) {
+            return strtotime($context->getValue());
+        });
+        $this->key('newKey')->defaultsTo('test');
+
+        $this->key('lineItems')
+            ->asArrayOfTransformed(OrderLineItem::class);
+
+    }
+}
+```
+
