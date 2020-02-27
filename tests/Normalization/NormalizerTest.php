@@ -3,7 +3,7 @@
 namespace Tests\Morebec\DomSer\Normalization;
 
 use DateTime;
-use Morebec\DomSer\Normalization\NormalizationDefinition as Definition;
+use Morebec\DomSer\Normalization\Configuration\NormalizationDefinition as Definition;
 use Morebec\DomSer\Normalization\Configuration\NormalizerConfiguration;
 use Morebec\DomSer\Normalization\Normalizer;
 use Morebec\DomSer\Normalization\Transformer\TransformationContext;
@@ -18,17 +18,22 @@ class NormalizerTest extends TestCase
         $config = new NormalizerConfiguration();
 
         $config->registerDefinition(Definition::forClass(TestOrder::class)
-                        ->property('id')->asString()
+                        ->property('id')->renamedTo('ID')->asString()
                         ->property('createdAt')->as(static function (TransformationContext $context) {
                             $value = $context->getValue();
                             return (new DateTime("@$value"))->format('Y-m-d');
                         })
                         ->property('lineItems')->asArrayOfTransformed(TestOrderLineItem::class)
+                        ->property('nbLineItems')->unbound()->as(static function(TransformationContext $context) {
+                                return count($context->getObject()->getLineItems());
+                        })
+                        ->end()
         );
 
         $config->registerDefinition(Definition::forClass(TestOrderLineItem::class)
                         ->property('quantity')
                         ->property('productId')->asString()
+                        ->end()
         );
 
         $normalizer = new Normalizer($config);
@@ -37,7 +42,7 @@ class NormalizerTest extends TestCase
         $data = $normalizer->normalize($order);
 
         $expected = [
-            'id' => $order->getId(),
+            'ID' => $order->getId(),
             'createdAt' => (new DateTime("@{$order->getCreatedAt()}"))->format('Y-m-d'),
             'lineItems' => [
                 [
@@ -48,7 +53,8 @@ class NormalizerTest extends TestCase
                     "quantity" => $order->getLineItems()[1]->getQuantity(),
                     "productId" => (string)$order->getLineItems()[1]->getProductId()
                 ]
-            ]
+            ],
+            'nbLineItems' => 2
         ];
 
 

@@ -2,6 +2,7 @@
 
 namespace Morebec\DomSer\Normalization;
 
+use Morebec\DomSer\Normalization\Configuration\NormalizedPropertyDefinition;
 use Morebec\DomSer\Normalization\Configuration\NormalizerConfiguration;
 use Morebec\DomSer\Normalization\Exception\NormalizationException;
 use Morebec\DomSer\Normalization\Transformer\TransformationContext;
@@ -43,16 +44,16 @@ class Normalizer
             $propertyName = $propertyDefinition->getPropertyName();
             $transformation = $propertyDefinition->getTransformer();
 
-            if (!$accessor->hasProperty($propertyName)) {
+            if (!$accessor->hasProperty($propertyName) && $propertyDefinition->isBound()) {
                 // We Cannot Normalize if a property does not exist
                 throw NormalizationException::ClassPropertyNotFound($objectClass, $propertyName);
             }
 
             // Get property value
-            $value = $accessor->readProperty($propertyName);
+            $value = $propertyDefinition->isBound() ? $accessor->readProperty($propertyName) : null;
 
             $context = new TransformationContext($propertyName, $value, $object, $this);
-            $normalizedForm[$propertyName] = $transformation->transform($context);
+            $normalizedForm[$propertyDefinition->getNormalizedName()] = $transformation->transform($context);
         }
 
         return $normalizedForm;

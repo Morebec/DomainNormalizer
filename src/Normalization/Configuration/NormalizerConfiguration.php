@@ -2,8 +2,6 @@
 
 namespace Morebec\DomSer\Normalization\Configuration;
 
-use Morebec\DomSer\Normalization\NormalizationDefinition;
-
 /**
  * Configuration for a normalizer.
  */

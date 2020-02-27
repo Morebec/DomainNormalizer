@@ -1,6 +1,6 @@
 <?php
 
-namespace Morebec\DomSer\Normalization;
+namespace Morebec\DomSer\Normalization\Configuration;
 
 final class NormalizationDefinition
 {
