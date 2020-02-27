@@ -20,4 +20,20 @@ class TestOrderLineItem
         $this->productId = $productId;
         $this->quantity = $quantity;
     }
+
+    /**
+     * @return string
+     */
+    public function getProductId(): string
+    {
+        return $this->productId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuantity(): int
+    {
+        return $this->quantity;
+    }
 }

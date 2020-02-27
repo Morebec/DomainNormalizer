@@ -1,36 +1,39 @@
 <?php
 
-
 namespace Morebec\DomSer\Normalization\Transformer;
+
+use Morebec\DomSer\Normalization\Normalizer;
 
 /**
  * Represents something that needs to be transformed.
- * It is a way to provide context information to field value transformers
+ * It is a way to provide context information to property value transformers.
  */
 class TransformationContext
 {
     /** @var string */
-    private $fieldName;
+    private $propertyName;
 
     /** @var mixed */
     private $value;
 
     /** @var object */
     private $object;
+    /**
+     * @var Normalizer
+     */
+    private $normalizer;
 
-    public function __construct(string $fieldName, $value, object $object)
+    public function __construct(string $propertyName, $value, object $object, Normalizer $normalizer)
     {
-        $this->fieldName = $fieldName;
+        $this->propertyName = $propertyName;
         $this->value = $value;
         $this->object = $object;
+        $this->normalizer = $normalizer;
     }
 
-    /**
-     * @return string
-     */
-    public function getFieldName(): string
+    public function getPropertyName(): string
     {
-        return $this->fieldName;
+        return $this->propertyName;
     }
 
     /**
@@ -41,11 +44,18 @@ class TransformationContext
         return $this->value;
     }
 
-    /**
-     * @return object
-     */
     public function getObject(): object
     {
         return $this->object;
+    }
+
+    public function getNormalizer(): Normalizer
+    {
+        return $this->normalizer;
+    }
+
+    public function getObjectClassName(): string
+    {
+        return \get_class($this->object);
     }
 }

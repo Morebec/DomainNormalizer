@@ -3,6 +3,8 @@
 
 namespace Tests\Morebec\DomSer\Normalization\Transformer;
 
+use Morebec\DomSer\Normalization\Configuration\NormalizerConfiguration;
+use Morebec\DomSer\Normalization\Normalizer;
 use Morebec\DomSer\Normalization\Transformer\TransformationContext;
 
 /**
@@ -17,6 +19,6 @@ class TransformationContextMaker
      */
     public static function makeContext($value): TransformationContext
     {
-        return new TransformationContext('', $value, new \StdClass());
+        return new TransformationContext('', $value, new \StdClass(), new Normalizer(new NormalizerConfiguration()));
     }
 }

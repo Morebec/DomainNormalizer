@@ -31,4 +31,28 @@ class TestOrder
             )
         ];
     }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCreatedAt(): int
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLineItems(): array
+    {
+        return $this->lineItems;
+    }
 }

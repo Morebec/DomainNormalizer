@@ -2,15 +2,15 @@
 
 namespace Tests\Morebec\DomSer\Normalization\Transformer;
 
-use Morebec\DomSer\Normalization\Transformer\AsIsFieldTransformer;
+use Morebec\DomSer\Normalization\Transformer\AsIsPropertyValueTransformer;
 use PHPUnit\Framework\TestCase;
 use Tests\Morebec\DomSer\Normalization\TestProductId;
 
-class AsIsFieldTransformerTest extends TestCase
+class AsIsPropertyValueTransformerTest extends TestCase
 {
     public function testTransform(): void
     {
-        $transformer = new AsIsFieldTransformer();
+        $transformer = new AsIsPropertyValueTransformer();
 
         $this->assertEquals(null, $transformer->transform(TransformationContextMaker::makeContext(null)));
 
