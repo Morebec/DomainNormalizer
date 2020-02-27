@@ -58,24 +58,52 @@ class ProductId
 }
 ``` 
 
-Using the following MappignL
+Using the following definition:
 
 ```php
-$definitions[] = NormalizationDefinition::forClass(Order::class)
-                ->field('id')->asString()
-                ->field('createdAt')->mappedAs(static function ($value) {
-                    return (new \DateTime("@$value"))->format('Y-m-d');
-                })
-                ->field('lineItems')->asMappedArrayOf(OrderLineItem::class)
-;
+use DateTime;
+use Morebec\DomSer\Normalization\Configuration\NormalizerConfiguration;
+use Morebec\DomSer\Normalization\Configuration\ObjectDefinitionFactory as DefinitionFactory;
+use Morebec\DomSer\Normalization\Configuration\ObjectNormalizationDefinition as Definition;
+use Morebec\DomSer\Normalization\Normalizer;
+use Morebec\DomSer\Normalization\Transformer\TransformationContext;
 
-$definitions[] = NormalizationDefinition::forClass(OrderLineItem::class)
-                ->field('quantity')
-                ->field('productId')->asString()
-;
+$config = new NormalizerConfiguration();
 
-$normalizer = new Normalizer($definitions);
 
+$config->registerDefinition(DefinitionFactory::forClass(
+    Order::class,
+    static function (Definition $d) {
+        $d->property('id')
+            ->renamedTo('ID')
+            ->asString();
+
+        $d->property('createdAt')->as(static function (TransformationContext $context) {
+            $value = $context->getValue();
+            return (new DateTime("@$value"))->format('Y-m-d');
+        });
+
+        $d->property('lineItems')
+            ->asArrayOfTransformed(OrderLineItem::class);
+
+        $d->createProperty('nbLineItems')
+            ->as(static function(TransformationContext $context) {
+                return count($context->getObject()->getLineItems());
+            }
+        );
+    })
+);
+
+
+$config->registerDefinition(DefinitionFactory::forClass(
+    OrderLineItem::class,
+    static function (Definition $d) {
+        $d->property('quantity');
+        $d->property('productId')->asString();
+    })
+);
+
+$normalizer = new Normalizer($config);
 $obj = new Order();
 $data = $normalizer->normalize($obj);
 ```
@@ -97,4 +125,37 @@ Would return the following normalized map:
     ]
   ]
 ];
+```
+
+
+It is also possible to contain your definitions inside classes:
+
+```php
+use Morebec\DomSer\Normalization\Configuration\ObjectNormalizationDefinition;
+
+class OrderDefinition extends ObjectNormalizationDefinition 
+{
+    public function __construct() 
+    {
+        parent::__construct(Order::class);
+        
+        $this->property('id')
+            ->renamedTo('ID')
+            ->asString();
+
+        $this->property('createdAt')->as(static function (TransformationContext $context) {
+            $value = $context->getValue();
+            return (new DateTime("@$value"))->format('Y-m-d');
+        });
+
+        $this->property('lineItems')
+            ->asArrayOfTransformed(OrderLineItem::class);
+
+        $this->createProperty('nbLineItems')
+            ->as(static function(TransformationContext $context) {
+                return count($context->getObject()->getLineItems());
+            }
+        );
+    }
+}
 ```
