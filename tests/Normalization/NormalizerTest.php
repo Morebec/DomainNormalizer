@@ -3,7 +3,7 @@
 namespace Tests\Morebec\DomSer\Normalization;
 
 use DateTime;
-use Morebec\DomSer\Normalization\Configuration\NormalizationDefinition as Definition;
+use Morebec\DomSer\Normalization\Configuration\FluentNormalizationDefinition as Definition;
 use Morebec\DomSer\Normalization\Configuration\NormalizerConfiguration;
 use Morebec\DomSer\Normalization\Normalizer;
 use Morebec\DomSer\Normalization\Transformer\TransformationContext;
