@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Tests\Morebec\DomSer\TestClasses;
+namespace Tests\Morebec\DomainNormalizer\TestClasses;
 
 
 class TestProductId

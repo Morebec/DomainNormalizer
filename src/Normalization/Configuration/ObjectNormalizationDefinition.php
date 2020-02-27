@@ -1,6 +1,6 @@
 <?php
 
-namespace Morebec\DomSer\Normalization\Configuration;
+namespace Morebec\DomainNormalizer\Normalization\Configuration;
 
 class ObjectNormalizationDefinition extends NormalizationDefinition
 {

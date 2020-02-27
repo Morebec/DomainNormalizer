@@ -1,9 +1,9 @@
 <?php
 
-namespace Morebec\DomSer\Denormalization\Transformer;
+namespace Morebec\DomainNormalizer\Denormalization\Transformer;
 
-use Morebec\DomSer\Denormalization\DenormalizationContext;
-use Morebec\DomSer\Denormalization\Exception\DenormalizationException;
+use Morebec\DomainNormalizer\Denormalization\DenormalizationContext;
+use Morebec\DomainNormalizer\Denormalization\Exception\DenormalizationException;
 
 class DenormalizeKeyAsObjectTransformer implements KeyValueTransformerInterface
 {

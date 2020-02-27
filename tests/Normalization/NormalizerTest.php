@@ -1,16 +1,16 @@
 <?php
 
-namespace Tests\Morebec\DomSer\Normalization;
+namespace Tests\Morebec\DomainNormalizer\Normalization;
 
 use DateTime;
-use Morebec\DomSer\Normalization\Configuration\NormalizerConfiguration;
-use Morebec\DomSer\Normalization\Configuration\ObjectNormalizationDefinitionFactory as DefinitionFactory;
-use Morebec\DomSer\Normalization\Configuration\ObjectNormalizationDefinition as Definition;
-use Morebec\DomSer\Normalization\Normalizer;
-use Morebec\DomSer\Normalization\NormalizationContext;
+use Morebec\DomainNormalizer\Normalization\Configuration\NormalizerConfiguration;
+use Morebec\DomainNormalizer\Normalization\Configuration\ObjectNormalizationDefinition as Definition;
+use Morebec\DomainNormalizer\Normalization\Configuration\ObjectNormalizationDefinitionFactory as DefinitionFactory;
+use Morebec\DomainNormalizer\Normalization\NormalizationContext;
+use Morebec\DomainNormalizer\Normalization\Normalizer;
 use PHPUnit\Framework\TestCase;
-use Tests\Morebec\DomSer\TestClasses\TestOrderLineItem;
-use Tests\Morebec\DomSer\TestClasses\TestOrder;
+use Tests\Morebec\DomainNormalizer\TestClasses\TestOrder;
+use Tests\Morebec\DomainNormalizer\TestClasses\TestOrderLineItem;
 
 class NormalizerTest extends TestCase
 {

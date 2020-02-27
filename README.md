@@ -1,7 +1,7 @@
-# DomSer
-DomSer (Short for Domain Serializer) is an Orkestra Component used to easily serialize domain objects, 
-through a fluent interface. It has the benefit of moving serialization/persistence concerns out of the
-domain classes, while providing a quick and easy way of defining primitive mapping information for domain classes.
+# DomainNormalizer
+DomainNormalizer is an Orkestra Component used to easily normalize domain objects, through a fluent interface. 
+It has the benefit of moving serialization/persistence concerns out of the domain classes, while providing a 
+quick and easy way of defining primitive mapping information for domain classes.
 
 It contains features for both serialization and deserialization (through normalization).
 
@@ -65,11 +65,11 @@ Using the following definition:
 
 ```php
 use DateTime;
-use Morebec\DomSer\Normalization\Configuration\NormalizerConfiguration;
-use Morebec\DomSer\Normalization\Configuration\ObjectNormalizationDefinitionFactory as DefinitionFactory;
-use Morebec\DomSer\Normalization\Configuration\ObjectNormalizationDefinition as Definition;
-use Morebec\DomSer\Normalization\Normalizer;
-use Morebec\DomSer\Normalization\NormalizationContext;
+use Morebec\DomainNormalizer\Normalization\Configuration\NormalizerConfiguration;
+use Morebec\DomainNormalizer\Normalization\Configuration\ObjectNormalizationDefinitionFactory as DefinitionFactory;
+use Morebec\DomainNormalizer\Normalization\Configuration\ObjectNormalizationDefinition as Definition;
+use Morebec\DomainNormalizer\Normalization\Normalizer;
+use Morebec\DomainNormalizer\Normalization\NormalizationContext;
 
 $config = new NormalizerConfiguration();
 
@@ -132,7 +132,7 @@ Would return the following normalized form:
 
 It is also possible to contain your definitions inside classes:
 ```php
-use Morebec\DomSer\Normalization\Configuration\ObjectNormalizationDefinition;
+use Morebec\DomainNormalizer\Normalization\Configuration\ObjectNormalizationDefinition;
 
 class OrderDefinition extends ObjectNormalizationDefinition 
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Morebec\DomSer\Normalization;
+namespace Morebec\DomainNormalizer\Normalization;
 
-use Morebec\DomSer\Normalization\Configuration\NormalizedPropertyDefinition;
-use Morebec\DomSer\Normalization\Configuration\NormalizerConfiguration;
-use Morebec\DomSer\Normalization\Exception\NormalizationException;
-use Morebec\DomSer\ObjectManipulation\ObjectAccessor;
+use Morebec\DomainNormalizer\Normalization\Configuration\NormalizedPropertyDefinition;
+use Morebec\DomainNormalizer\Normalization\Configuration\NormalizerConfiguration;
+use Morebec\DomainNormalizer\Normalization\Exception\NormalizationException;
+use Morebec\DomainNormalizer\ObjectManipulation\ObjectAccessor;
 
 class Normalizer
 {

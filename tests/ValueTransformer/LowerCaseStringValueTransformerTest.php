@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Morebec\DomSer\Normalization\Transformer;
+namespace Tests\Morebec\DomainNormalizer\Normalization\Transformer;
 
-use Morebec\DomSer\ValueTransformer\LowerCaseStringValueTransformer;
+use Morebec\DomainNormalizer\ValueTransformer\LowerCaseStringValueTransformer;
 use PHPUnit\Framework\TestCase;
-use Tests\Morebec\DomSer\TestClasses\TestProductId;
+use Tests\Morebec\DomainNormalizer\TestClasses\TestProductId;
 
 class LowerCaseStringValueTransformerTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Morebec\DomSer\ValueTransformer;
+namespace Morebec\DomainNormalizer\ValueTransformer;
 
 /**
  * Transforms a value by casting to a string.

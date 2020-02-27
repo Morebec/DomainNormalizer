@@ -1,8 +1,8 @@
 <?php
 
-namespace Morebec\DomSer\Denormalization\Transformer;
+namespace Morebec\DomainNormalizer\Denormalization\Transformer;
 
-use Morebec\DomSer\Denormalization\DenormalizationContext;
+use Morebec\DomainNormalizer\Denormalization\DenormalizationContext;
 
 interface KeyValueTransformerInterface
 {

@@ -1,16 +1,16 @@
 <?php
 
-namespace Tests\Morebec\DomSer\Denormalization;
+namespace Tests\Morebec\DomainNormalizer\Denormalization;
 
-use Morebec\DomSer\Denormalization\Configuration\DenormalizationConfiguration;
-use Morebec\DomSer\Denormalization\Configuration\ObjectDenormalizationDefinition;
-use Morebec\DomSer\Denormalization\Configuration\ObjectDenormalizationDefinitionFactory;
-use Morebec\DomSer\Denormalization\DenormalizationContext;
-use Morebec\DomSer\Denormalization\Denormalizer;
+use Morebec\DomainNormalizer\Denormalization\Configuration\DenormalizationConfiguration;
+use Morebec\DomainNormalizer\Denormalization\Configuration\ObjectDenormalizationDefinition;
+use Morebec\DomainNormalizer\Denormalization\Configuration\ObjectDenormalizationDefinitionFactory;
+use Morebec\DomainNormalizer\Denormalization\DenormalizationContext;
+use Morebec\DomainNormalizer\Denormalization\Denormalizer;
 use PHPUnit\Framework\TestCase;
-use Tests\Morebec\DomSer\TestClasses\TestOrder;
-use Tests\Morebec\DomSer\TestClasses\TestOrderLineItem;
-use Tests\Morebec\DomSer\TestClasses\TestProductId;
+use Tests\Morebec\DomainNormalizer\TestClasses\TestOrder;
+use Tests\Morebec\DomainNormalizer\TestClasses\TestOrderLineItem;
+use Tests\Morebec\DomainNormalizer\TestClasses\TestProductId;
 
 class DenormalizerTest extends TestCase
 {

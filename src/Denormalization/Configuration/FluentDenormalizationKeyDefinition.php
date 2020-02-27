@@ -1,12 +1,12 @@
 <?php
 
-namespace Morebec\DomSer\Denormalization\Configuration;
+namespace Morebec\DomainNormalizer\Denormalization\Configuration;
 
-use Morebec\DomSer\Denormalization\DefaultValueProvider\ClosureDefaultValueProvider;
-use Morebec\DomSer\Denormalization\DenormalizationContext;
-use Morebec\DomSer\Denormalization\Transformer\DenormalizationClosureValueTransformer;
-use Morebec\DomSer\Denormalization\Transformer\DenormalizeKeyAsObjectArrayTransformer;
-use Morebec\DomSer\Denormalization\Transformer\DenormalizeKeyAsObjectTransformer;
+use Morebec\DomainNormalizer\Denormalization\DefaultValueProvider\ClosureDefaultValueProvider;
+use Morebec\DomainNormalizer\Denormalization\DenormalizationContext;
+use Morebec\DomainNormalizer\Denormalization\Transformer\DenormalizationClosureValueTransformer;
+use Morebec\DomainNormalizer\Denormalization\Transformer\DenormalizeKeyAsObjectArrayTransformer;
+use Morebec\DomainNormalizer\Denormalization\Transformer\DenormalizeKeyAsObjectTransformer;
 
 class FluentDenormalizationKeyDefinition extends DenormalizationKeyDefinition
 {

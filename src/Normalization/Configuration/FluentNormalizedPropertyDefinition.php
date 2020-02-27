@@ -1,15 +1,15 @@
 <?php
 
-namespace Morebec\DomSer\Normalization\Configuration;
+namespace Morebec\DomainNormalizer\Normalization\Configuration;
 
 use Closure;
-use Morebec\DomSer\Normalization\Transformer\NormalizationClosurePropertyValueTransformer;
-use Morebec\DomSer\Normalization\Transformer\NormalizationPropertyValueTransformer;
-use Morebec\DomSer\Normalization\Transformer\NormalizeObjectArrayPropertyValueTransformer;
-use Morebec\DomSer\Normalization\Transformer\NormalizeObjectPropertyValueTransformer;
-use Morebec\DomSer\Normalization\Transformer\PropertyValueTransformerInterface;
-use Morebec\DomSer\ValueTransformer\AsIsValueTransformer;
-use Morebec\DomSer\ValueTransformer\StringValueTransformer;
+use Morebec\DomainNormalizer\Normalization\Transformer\NormalizationClosurePropertyValueTransformer;
+use Morebec\DomainNormalizer\Normalization\Transformer\NormalizationPropertyValueTransformer;
+use Morebec\DomainNormalizer\Normalization\Transformer\NormalizeObjectArrayPropertyValueTransformer;
+use Morebec\DomainNormalizer\Normalization\Transformer\NormalizeObjectPropertyValueTransformer;
+use Morebec\DomainNormalizer\Normalization\Transformer\PropertyValueTransformerInterface;
+use Morebec\DomainNormalizer\ValueTransformer\AsIsValueTransformer;
+use Morebec\DomainNormalizer\ValueTransformer\StringValueTransformer;
 
 class FluentNormalizedPropertyDefinition extends NormalizedPropertyDefinition
 {

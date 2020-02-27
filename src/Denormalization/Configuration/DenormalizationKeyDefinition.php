@@ -1,12 +1,12 @@
 <?php
 
-namespace Morebec\DomSer\Denormalization\Configuration;
+namespace Morebec\DomainNormalizer\Denormalization\Configuration;
 
-use Morebec\DomSer\Denormalization\DefaultValueProvider\DefaultValueProviderInterface;
-use Morebec\DomSer\Denormalization\DefaultValueProvider\ErrorOnMissingValueDefaultValueProvider;
-use Morebec\DomSer\Denormalization\Transformer\DenormalizationValueTransformer;
-use Morebec\DomSer\Denormalization\Transformer\KeyValueTransformerInterface;
-use Morebec\DomSer\ValueTransformer\AsIsValueTransformer;
+use Morebec\DomainNormalizer\Denormalization\DefaultValueProvider\DefaultValueProviderInterface;
+use Morebec\DomainNormalizer\Denormalization\DefaultValueProvider\ErrorOnMissingValueDefaultValueProvider;
+use Morebec\DomainNormalizer\Denormalization\Transformer\DenormalizationValueTransformer;
+use Morebec\DomainNormalizer\Denormalization\Transformer\KeyValueTransformerInterface;
+use Morebec\DomainNormalizer\ValueTransformer\AsIsValueTransformer;
 
 class DenormalizationKeyDefinition
 {

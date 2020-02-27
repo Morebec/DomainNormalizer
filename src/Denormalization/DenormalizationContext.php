@@ -1,6 +1,6 @@
 <?php
 
-namespace Morebec\DomSer\Denormalization;
+namespace Morebec\DomainNormalizer\Denormalization;
 
 /**
  * Represents something that needs to be transformed during denormalization.

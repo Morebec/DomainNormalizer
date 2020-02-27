@@ -1,6 +1,6 @@
 <?php
 
-namespace Morebec\DomSer\ObjectManipulation;
+namespace Morebec\DomainNormalizer\ObjectManipulation;
 
 interface ObjectInstantiatorInterface
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Morebec\DomSer\Normalization\Transformer;
+namespace Morebec\DomainNormalizer\Normalization\Transformer;
 
-use Morebec\DomSer\Normalization\Exception\NormalizationException;
-use Morebec\DomSer\Normalization\NormalizationContext;
-use Morebec\DomSer\ValueTransformer\ClosureValueTransformer;
+use Morebec\DomainNormalizer\Normalization\Exception\NormalizationException;
+use Morebec\DomainNormalizer\Normalization\NormalizationContext;
+use Morebec\DomainNormalizer\ValueTransformer\ClosureValueTransformer;
 
 class NormalizationClosurePropertyValueTransformer implements PropertyValueTransformerInterface
 {

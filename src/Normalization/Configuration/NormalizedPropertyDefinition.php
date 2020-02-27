@@ -1,10 +1,10 @@
 <?php
 
-namespace Morebec\DomSer\Normalization\Configuration;
+namespace Morebec\DomainNormalizer\Normalization\Configuration;
 
-use Morebec\DomSer\Normalization\Transformer\NormalizationPropertyValueTransformer;
-use Morebec\DomSer\Normalization\Transformer\PropertyValueTransformerInterface;
-use Morebec\DomSer\ValueTransformer\AsIsValueTransformer;
+use Morebec\DomainNormalizer\Normalization\Transformer\NormalizationPropertyValueTransformer;
+use Morebec\DomainNormalizer\Normalization\Transformer\PropertyValueTransformerInterface;
+use Morebec\DomainNormalizer\ValueTransformer\AsIsValueTransformer;
 
 // TODO delete reference to normalizationDefinition
 class NormalizedPropertyDefinition

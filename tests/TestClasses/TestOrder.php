@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Tests\Morebec\DomSer\TestClasses;
+namespace Tests\Morebec\DomainNormalizer\TestClasses;
 
 
-use Tests\Morebec\DomSer\TestClasses\TestOrderLineItem;
-use Tests\Morebec\DomSer\TestClasses\TestProductId;
+use Tests\Morebec\DomainNormalizer\TestClasses\TestOrderLineItem;
+use Tests\Morebec\DomainNormalizer\TestClasses\TestProductId;
 
 class TestOrder
 {

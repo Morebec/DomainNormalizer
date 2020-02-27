@@ -1,9 +1,9 @@
 <?php
 
-namespace Morebec\DomSer\Denormalization\DefaultValueProvider;
+namespace Morebec\DomainNormalizer\Denormalization\DefaultValueProvider;
 
-use Morebec\DomSer\Denormalization\DenormalizationContext;
-use Morebec\DomSer\Denormalization\Exception\DenormalizationException;
+use Morebec\DomainNormalizer\Denormalization\DenormalizationContext;
+use Morebec\DomainNormalizer\Denormalization\Exception\DenormalizationException;
 
 /**
  * USed to throw errors when a key is missing.

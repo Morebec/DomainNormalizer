@@ -1,10 +1,10 @@
 <?php
 
-namespace Morebec\DomSer\Denormalization\Transformer;
+namespace Morebec\DomainNormalizer\Denormalization\Transformer;
 
-use Morebec\DomSer\Denormalization\DenormalizationContext;
-use Morebec\DomSer\Denormalization\Exception\DenormalizationException;
-use Morebec\DomSer\ValueTransformer\ClosureValueTransformer;
+use Morebec\DomainNormalizer\Denormalization\DenormalizationContext;
+use Morebec\DomainNormalizer\Denormalization\Exception\DenormalizationException;
+use Morebec\DomainNormalizer\ValueTransformer\ClosureValueTransformer;
 
 /**
  * Unlike using a DenormalizationValueTransformer with a ClosureValueTransformer

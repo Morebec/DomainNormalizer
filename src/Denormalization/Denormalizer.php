@@ -1,13 +1,13 @@
 <?php
 
-namespace Morebec\DomSer\Denormalization;
+namespace Morebec\DomainNormalizer\Denormalization;
 
-use Morebec\DomSer\Denormalization\Configuration\DenormalizationConfiguration;
-use Morebec\DomSer\Denormalization\Configuration\DenormalizationKeyDefinition;
-use Morebec\DomSer\Denormalization\Exception\DenormalizationException;
-use Morebec\DomSer\ObjectManipulation\DoctrineInstantiator;
-use Morebec\DomSer\ObjectManipulation\ObjectAccessor;
-use Morebec\DomSer\ObjectManipulation\ObjectInstantiatorInterface;
+use Morebec\DomainNormalizer\Denormalization\Configuration\DenormalizationConfiguration;
+use Morebec\DomainNormalizer\Denormalization\Configuration\DenormalizationKeyDefinition;
+use Morebec\DomainNormalizer\Denormalization\Exception\DenormalizationException;
+use Morebec\DomainNormalizer\ObjectManipulation\DoctrineInstantiator;
+use Morebec\DomainNormalizer\ObjectManipulation\ObjectAccessor;
+use Morebec\DomainNormalizer\ObjectManipulation\ObjectInstantiatorInterface;
 
 class Denormalizer
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Morebec\DomSer\Denormalization\Configuration;
+namespace Morebec\DomainNormalizer\Denormalization\Configuration;
 
 class ObjectDenormalizationDefinitionFactory extends ObjectDenormalizationDefinition
 {

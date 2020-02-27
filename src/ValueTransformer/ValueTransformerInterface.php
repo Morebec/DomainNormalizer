@@ -1,6 +1,6 @@
 <?php
 
-namespace Morebec\DomSer\ValueTransformer;
+namespace Morebec\DomainNormalizer\ValueTransformer;
 
 interface ValueTransformerInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Morebec\DomSer\Normalization\Transformer;
+namespace Tests\Morebec\DomainNormalizer\Normalization\Transformer;
 
-use Morebec\DomSer\ValueTransformer\ClosureValueTransformer;
+use Morebec\DomainNormalizer\ValueTransformer\ClosureValueTransformer;
 use PHPUnit\Framework\TestCase;
 
 class ClosureValueTransformerTest extends TestCase

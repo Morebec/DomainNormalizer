@@ -1,8 +1,8 @@
 <?php
 
-namespace Morebec\DomSer\Denormalization\Exception;
+namespace Morebec\DomainNormalizer\Denormalization\Exception;
 
-use Morebec\DomSer\Denormalization\DenormalizationContext;
+use Morebec\DomainNormalizer\Denormalization\DenormalizationContext;
 
 class DenormalizationException extends \RuntimeException
 {

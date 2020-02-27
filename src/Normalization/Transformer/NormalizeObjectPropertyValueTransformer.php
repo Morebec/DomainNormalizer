@@ -1,9 +1,9 @@
 <?php
 
-namespace Morebec\DomSer\Normalization\Transformer;
+namespace Morebec\DomainNormalizer\Normalization\Transformer;
 
-use Morebec\DomSer\Normalization\Exception\NormalizationException;
-use Morebec\DomSer\Normalization\NormalizationContext;
+use Morebec\DomainNormalizer\Normalization\Exception\NormalizationException;
+use Morebec\DomainNormalizer\Normalization\NormalizationContext;
 
 /**
  * Transformer normalizing an property value that has an object type.

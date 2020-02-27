@@ -1,8 +1,8 @@
 <?php
 
-namespace Morebec\DomSer\Normalization\Exception;
+namespace Morebec\DomainNormalizer\Normalization\Exception;
 
-use Morebec\DomSer\Normalization\NormalizationContext;
+use Morebec\DomainNormalizer\Normalization\NormalizationContext;
 
 class NormalizationException extends \RuntimeException
 {
