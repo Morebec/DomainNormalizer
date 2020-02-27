@@ -1,12 +1,13 @@
 <?php
 
-namespace Morebec\DomSer\Normalization\Configuration;
+namespace Morebec\DomainNormalizer\Normalization\Configuration;
 
 /**
  * Configuration for a normalizer.
  */
 class NormalizerConfiguration
 {
+    /** @var array<NormalizationDefinition> */
     private $definitions;
 
     public function __construct()
@@ -32,7 +33,7 @@ class NormalizerConfiguration
      */
     public function hasDefinitionForClass(string $className): bool
     {
-        return \array_key_exists($className, $this->definitions);
+        return $this->getDefinitionForClass($className) !== null;
     }
 
     /**

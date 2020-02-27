@@ -1,8 +1,8 @@
 <?php
 
-namespace Morebec\DomSer\Normalization\Exception;
+namespace Morebec\DomainNormalizer\Normalization\Exception;
 
-use Morebec\DomSer\Normalization\Transformer\TransformationContext;
+use Morebec\DomainNormalizer\Normalization\NormalizationContext;
 
 class NormalizationException extends \RuntimeException
 {
@@ -25,7 +25,7 @@ class NormalizationException extends \RuntimeException
      * @return NormalizationException
      */
     public static function CannotNormalizeNonObjectToClass(
-        TransformationContext $context,
+        NormalizationContext $context,
         string $unexpectedValueType,
         string $expectedClassName
     ): self {
@@ -41,7 +41,7 @@ class NormalizationException extends \RuntimeException
      * @return NormalizationException
      */
     public static function UnexpectedPropertyValueClass(
-        TransformationContext $context,
+        NormalizationContext $context,
         string $unexpectedClassName,
         string $expectedClassName
     ): self {

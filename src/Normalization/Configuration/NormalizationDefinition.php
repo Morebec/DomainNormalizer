@@ -1,37 +1,21 @@
 <?php
 
-namespace Morebec\DomSer\Normalization\Configuration;
+namespace Morebec\DomainNormalizer\Normalization\Configuration;
 
-final class NormalizationDefinition
+class NormalizationDefinition
 {
     /**
      * @var string name of the class to normalize
      */
-    private $className;
+    protected $className;
 
     /** @var array<NormalizedPropertyDefinition> */
-    private $properties;
+    protected $properties;
 
     public function __construct(string $className)
     {
         $this->className = $className;
         $this->properties = [];
-    }
-
-    public static function forClass(string $className): self
-    {
-        return new self($className);
-    }
-
-    /**
-     * Method used to specify the a property to normalize.
-     */
-    public function property(string $propertyName): NormalizedPropertyDefinition
-    {
-        $propertyDefinition = new NormalizedPropertyDefinition($this, $propertyName);
-        $this->properties[$propertyName] = $propertyDefinition;
-
-        return $propertyDefinition;
     }
 
     public function getClassName(): string

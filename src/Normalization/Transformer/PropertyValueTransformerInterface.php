@@ -1,6 +1,8 @@
 <?php
 
-namespace Morebec\DomSer\Normalization\Transformer;
+namespace Morebec\DomainNormalizer\Normalization\Transformer;
+
+use Morebec\DomainNormalizer\Normalization\NormalizationContext;
 
 /**
  * A property transformation represents the transformation to execute for the value of a given property.
@@ -12,5 +14,5 @@ interface PropertyValueTransformerInterface
      *
      * @return mixed
      */
-    public function transform(TransformationContext $context);
+    public function transform(NormalizationContext $context);
 }
