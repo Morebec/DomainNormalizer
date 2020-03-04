@@ -12,7 +12,7 @@ class AsIsValueTransformerTest extends TestCase
     {
         $transformer = new AsIsValueTransformer();
 
-        $this->assertEquals(null, $transformer->transform(null));
+        $this->assertNull($transformer->transform(null));
 
         $productId = new TestProductId('PRODUCT-id');
         $this->assertEquals($productId, $transformer->transform($productId));

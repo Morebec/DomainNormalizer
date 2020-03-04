@@ -2,12 +2,15 @@
 
 namespace Morebec\DomainNormalizer\Denormalization;
 
+use Morebec\DomainNormalizer\Denormalization\Configuration\AutomaticDenormalizerDefinition;
 use Morebec\DomainNormalizer\Denormalization\Configuration\DenormalizationConfiguration;
 use Morebec\DomainNormalizer\Denormalization\Configuration\DenormalizationKeyDefinition;
+use Morebec\DomainNormalizer\Denormalization\Configuration\FluentDenormalizationKeyDefinition;
 use Morebec\DomainNormalizer\Denormalization\Exception\DenormalizationException;
 use Morebec\DomainNormalizer\ObjectManipulation\DoctrineInstantiator;
 use Morebec\DomainNormalizer\ObjectManipulation\ObjectAccessor;
 use Morebec\DomainNormalizer\ObjectManipulation\ObjectInstantiatorInterface;
+use ReflectionClass;
 
 class Denormalizer
 {
@@ -41,7 +44,12 @@ class Denormalizer
         $object = $this->objectInstantiator->instantiate($objectClass);
         $accessor = ObjectAccessor::access($object);
 
-        $keyDefinitions = $def->getKeyDefinitions();
+        if ($def instanceof AutomaticDenormalizerDefinition) {
+            $keyDefinitions = $this->getKeysForAutomaticDefinition($object, $normalizedForm, $def);
+        } else {
+            $keyDefinitions = $def->getKeyDefinitions();
+        }
+
         /** @var DenormalizationKeyDefinition $keyDef */
         foreach ($keyDefinitions as $keyDef) {
             $keyName = $keyDef->getKeyName();
@@ -52,9 +60,6 @@ class Denormalizer
                 // We Cannot denormalize a key if a corresponding property does not exist
                 throw DenormalizationException::ClassKeyNotFound($objectClass, $denormalizedKeyName);
             }
-
-            $transformation = $keyDef->getTransformer();
-            $defaultValueProvider = $keyDef->getDefaultValueProvider();
 
             // Ensure the key exists in the data
             $keyExists = \array_key_exists($keyName, $normalizedForm);
@@ -69,11 +74,43 @@ class Denormalizer
                 $value = $normalizedForm[$keyName];
             }
             $context = new DenormalizationContext($keyName, $denormalizedKeyName, $value, $object, $this);
+
+            $transformation = $keyDef->getTransformer();
             $value = $transformation->transform($context);
 
             $accessor->writeProperty($denormalizedKeyName, $value);
         }
 
         return $object;
+    }
+
+    private function getKeysForAutomaticDefinition(
+        object $object,
+        array $normalizedForm,
+        AutomaticDenormalizerDefinition $def
+    ): array {
+        $r = new ReflectionClass($object);
+        $properties = [];
+        foreach ($r->getProperties() as $p) {
+            $propertyName = $p->getName();
+            $propDef = new FluentDenormalizationKeyDefinition($def, $propertyName);
+            $properties[] = $propDef;
+
+            $value = $normalizedForm[$propertyName];
+
+            $isObject = \is_array($value) && \array_key_exists('__class__', $value);
+            if ($isObject) {
+                $propDef->asTransformed($value['__class__']);
+            } elseif (\is_array($value) && !empty($value)) {
+                $firstIndexKey = array_key_first($value);
+                $firstValue = $value[$firstIndexKey];
+                $isFirstValueObject = \is_array($firstValue) && \array_key_exists('__class__', $firstValue);
+                if ($isFirstValueObject) {
+                    $propDef->asArrayOfTransformed($firstValue['__class__']);
+                }
+            }
+        }
+
+        return $properties;
     }
 }

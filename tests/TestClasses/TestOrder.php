@@ -1,11 +1,6 @@
 <?php
 
-
 namespace Tests\Morebec\DomainNormalizer\TestClasses;
-
-
-use Tests\Morebec\DomainNormalizer\TestClasses\TestOrderLineItem;
-use Tests\Morebec\DomainNormalizer\TestClasses\TestProductId;
 
 class TestOrder
 {
@@ -31,29 +26,20 @@ class TestOrder
             new TestOrderLineItem(
                 new TestProductId(uniqid('', true)),
                 random_int(1, 5)
-            )
+            ),
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
     public function getCreatedAt(): int
     {
         return $this->createdAt;
     }
 
-    /**
-     * @return array
-     */
     public function getLineItems(): array
     {
         return $this->lineItems;

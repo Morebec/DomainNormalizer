@@ -12,7 +12,7 @@ class LowerCaseStringValueTransformerTest extends TestCase
     {
         $transformer = new LowerCaseStringValueTransformer();
 
-        $this->assertEquals(null, $transformer->transform(null));
+        $this->assertNull($transformer->transform(null));
 
         $transformer = new LowerCaseStringValueTransformer(true);
         $this->assertEquals('', $transformer->transform(null));

@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class ClosureValueTransformerTest extends TestCase
 {
-
     public function testTransform(): void
     {
         $transformer = new ClosureValueTransformer(static function ($value) {
