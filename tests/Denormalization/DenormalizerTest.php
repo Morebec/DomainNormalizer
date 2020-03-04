@@ -14,7 +14,6 @@ use Tests\Morebec\DomainNormalizer\TestClasses\TestProductId;
 
 class DenormalizerTest extends TestCase
 {
-
     public function testDenormalize(): void
     {
         $config = new DenormalizationConfiguration();
@@ -35,28 +34,27 @@ class DenormalizerTest extends TestCase
            static function (ObjectDenormalizationDefinition $d) {
                $d->key('quantity');
                $d->key('productId')->as(static function (DenormalizationContext $context) {
-                  return new TestProductId($context->getValue());
+                   return new TestProductId($context->getValue());
                });
            }
         ));
 
         $denormalizer = new Denormalizer($config);
 
-
         $data = [
             'ID' => uniqid('', true),
             'createdAt' => (new \DateTime())->format('Y-m-d'),
             'lineItems' => [
                 [
-                    "quantity" => 5,
-                    "productId" => uniqid('', true)
+                    'quantity' => 5,
+                    'productId' => uniqid('', true),
                 ],
                 [
-                    "quantity" => 2,
-                    "productId" => uniqid('', true)
-                ]
+                    'quantity' => 2,
+                    'productId' => uniqid('', true),
+                ],
             ],
-            'nbLineItems' => 2
+            'nbLineItems' => 2,
         ];
 
         /** @var TestOrder $object */

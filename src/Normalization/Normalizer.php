@@ -2,10 +2,15 @@
 
 namespace Morebec\DomainNormalizer\Normalization;
 
+use Morebec\DomainNormalizer\Normalization\Configuration\AutomaticNormalizationDefinition;
+use Morebec\DomainNormalizer\Normalization\Configuration\FluentNormalizedPropertyDefinition;
 use Morebec\DomainNormalizer\Normalization\Configuration\NormalizedPropertyDefinition;
 use Morebec\DomainNormalizer\Normalization\Configuration\NormalizerConfiguration;
 use Morebec\DomainNormalizer\Normalization\Exception\NormalizationException;
 use Morebec\DomainNormalizer\ObjectManipulation\ObjectAccessor;
+use Morebec\DomainNormalizer\ObjectManipulation\ObjectAccessorInterface;
+use ReflectionClass;
+use ReflectionException;
 
 class Normalizer
 {
@@ -37,7 +42,12 @@ class Normalizer
 
         $normalizedForm = [];
 
-        $properties = $def->getProperties();
+        if ($def instanceof AutomaticNormalizationDefinition) {
+            $properties = $this->getPropertiesForAutomaticDefinition($object, $def, $accessor);
+        } else {
+            $properties = $def->getProperties();
+        }
+
         /** @var NormalizedPropertyDefinition $propertyDefinition */
         foreach ($properties as $propertyDefinition) {
             $propertyName = $propertyDefinition->getPropertyName();
@@ -56,5 +66,48 @@ class Normalizer
         }
 
         return $normalizedForm;
+    }
+
+    /**
+     * @param $def
+     *
+     * @throws ReflectionException
+     */
+    private function getPropertiesForAutomaticDefinition(
+        object $object,
+        AutomaticNormalizationDefinition $def,
+        ObjectAccessorInterface $accessor
+    ): array {
+        $r = new ReflectionClass($object);
+        $properties = [];
+        foreach ($r->getProperties() as $p) {
+            $propertyName = $p->getName();
+            $propDef = new FluentNormalizedPropertyDefinition($def, $propertyName);
+
+            $value = $accessor->readProperty($propertyName);
+
+            if (\is_object($value)) {
+                $propDef->asTransformed(\get_class($value));
+            } elseif (\is_array($value) && !empty($value)) {
+                $firstIndexKey = array_key_first($value);
+                $firstValue = $value[$firstIndexKey];
+                if (\is_object($firstValue)) {
+                    $propDef->asArrayOfTransformed(\get_class($firstValue));
+                }
+            }
+
+            $properties[] = $propDef;
+        }
+
+        if ($def->normalizeClassName()) {
+            // Add an unbound property for the class name
+            $classProp = new FluentNormalizedPropertyDefinition($def, '__class__');
+            $classProp->unbound()->as(static function (NormalizationContext $context) use ($r) {
+                return $r->getName();
+            });
+            $properties[] = $classProp;
+        }
+
+        return $properties;
     }
 }

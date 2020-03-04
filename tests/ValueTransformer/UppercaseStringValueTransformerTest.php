@@ -8,12 +8,11 @@ use Tests\Morebec\DomainNormalizer\TestClasses\TestProductId;
 
 class UppercaseStringValueTransformerTest extends TestCase
 {
-
     public function testTransform(): void
     {
         $transformer = new UppercaseStringValueTransformer();
 
-        $this->assertEquals(null, $transformer->transform(null));
+        $this->assertNull($transformer->transform(null));
 
         $transformer = new UppercaseStringValueTransformer(true);
         $this->assertEquals('', $transformer->transform(null));

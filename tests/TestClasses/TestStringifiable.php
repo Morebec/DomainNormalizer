@@ -1,0 +1,7 @@
+<?php
+
+namespace Tests\Morebec\DomainNormalizer\TestClasses;
+
+interface TestStringifiable
+{
+}

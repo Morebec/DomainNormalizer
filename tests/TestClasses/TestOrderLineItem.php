@@ -1,10 +1,6 @@
 <?php
 
-
 namespace Tests\Morebec\DomainNormalizer\TestClasses;
-
-
-use Tests\Morebec\DomainNormalizer\TestClasses\TestProductId;
 
 class TestOrderLineItem
 {
@@ -23,17 +19,11 @@ class TestOrderLineItem
         $this->quantity = $quantity;
     }
 
-    /**
-     * @return string
-     */
     public function getProductId(): string
     {
         return $this->productId;
     }
 
-    /**
-     * @return int
-     */
     public function getQuantity(): int
     {
         return $this->quantity;

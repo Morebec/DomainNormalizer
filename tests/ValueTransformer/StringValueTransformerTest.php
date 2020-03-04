@@ -8,12 +8,11 @@ use Tests\Morebec\DomainNormalizer\TestClasses\TestProductId;
 
 class StringValueTransformerTest extends TestCase
 {
-
     public function testTransform(): void
     {
         $transformer = new StringValueTransformer();
 
-        $this->assertEquals(null, $transformer->transform(null));
+        $this->assertNull($transformer->transform(null));
 
         $transformer = new StringValueTransformer(true);
         $this->assertEquals('', $transformer->transform(null));

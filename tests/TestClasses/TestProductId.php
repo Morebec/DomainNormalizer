@@ -1,10 +1,8 @@
 <?php
 
-
 namespace Tests\Morebec\DomainNormalizer\TestClasses;
 
-
-class TestProductId
+class TestProductId implements TestStringifiable
 {
     /**
      * @var string
