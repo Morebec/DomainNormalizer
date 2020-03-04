@@ -214,3 +214,12 @@ class OrderDenormalizationDefinition extends ObjectDenormalizationDefinition
 }
 ```
 
+## Automatic De/Normalization
+Although we recommend using explicit definitions, it is also possible to use automatic normalization and denormalization.  
+This can be useful when dealing with simple DTOs to normalize/denormalize:
+
+```php
+new AutomaticNormalizationDefinition(Order::class);
+
+new AutomaticDenormalizationDefinition(Order::class);
+```
