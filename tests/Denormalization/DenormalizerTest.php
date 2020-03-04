@@ -2,6 +2,7 @@
 
 namespace Tests\Morebec\DomainNormalizer\Denormalization;
 
+use Morebec\DomainNormalizer\Denormalization\Configuration\AutomaticDenormalizerDefinition;
 use Morebec\DomainNormalizer\Denormalization\Configuration\DenormalizationConfiguration;
 use Morebec\DomainNormalizer\Denormalization\Configuration\ObjectDenormalizationDefinition;
 use Morebec\DomainNormalizer\Denormalization\Configuration\ObjectDenormalizationDefinitionFactory;
@@ -67,6 +68,54 @@ class DenormalizerTest extends TestCase
         $this->assertEquals($data['lineItems'][0]['quantity'], $object->getLineItems()[0]->getQuantity());
 
         $this->assertEquals($data['lineItems'][1]['productId'], $object->getLineItems()[1]->getProductId());
+        $this->assertEquals($data['lineItems'][1]['quantity'], $object->getLineItems()[1]->getQuantity());
+    }
+
+    public function testAutomaticDenormalization(): void
+    {
+        $config = new DenormalizationConfiguration();
+
+        $config->registerDefinition(new AutomaticDenormalizerDefinition(TestOrder::class));
+        $config->registerDefinition(new AutomaticDenormalizerDefinition(TestProductId::class));
+        $config->registerDefinition(new AutomaticDenormalizerDefinition(TestOrderLineItem::class));
+
+        $denormalizer = new Denormalizer($config);
+
+        $data = [
+            'id' => 'ORDER_ID',
+            'createdAt' => time(),
+            'lineItems' => [
+                0 => [
+                    'productId' => [
+                        'id' => 'LINE_1_ID',
+                        '__class__' => TestProductId::class,
+                    ],
+                    'quantity' => 5,
+                    '__class__' => TestOrderLineItem::class,
+                ],
+                1 => [
+                    'productId' => [
+                        'id' => 'LINE_2_ID',
+                        '__class__' => TestProductId::class,
+                    ],
+                    'quantity' => 4,
+                    '__class__' => TestOrderLineItem::class,
+                ],
+            ],
+            '__class__' => TestOrder::class,
+        ];
+
+        $object = $denormalizer->denormalize($data, TestOrder::class);
+
+        $this->assertInstanceOf(TestOrder::class, $object);
+
+        $this->assertEquals($data['id'], $object->getId());
+        $this->assertEquals($data['createdAt'], $object->getCreatedAt());
+        $this->assertCount(2, $object->getLineItems());
+        $this->assertEquals($data['lineItems'][0]['productId']['id'], $object->getLineItems()[0]->getProductId());
+        $this->assertEquals($data['lineItems'][0]['quantity'], $object->getLineItems()[0]->getQuantity());
+
+        $this->assertEquals($data['lineItems'][1]['productId']['id'], $object->getLineItems()[1]->getProductId());
         $this->assertEquals($data['lineItems'][1]['quantity'], $object->getLineItems()[1]->getQuantity());
     }
 }

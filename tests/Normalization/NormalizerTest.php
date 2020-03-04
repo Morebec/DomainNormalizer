@@ -89,27 +89,27 @@ class NormalizerTest extends TestCase
         $data = $normalizer->normalize($order);
 
         $expected = [
-            "id" => $order->getId(),
-            "createdAt" => $order->getCreatedAt(),
-            "lineItems" => [
+            'id' => $order->getId(),
+            'createdAt' => $order->getCreatedAt(),
+            'lineItems' => [
                 0 => [
-                    "productId" => [
-                        "id" => $order->getLineItems()[0]->getProductId(),
-                        "__class__" => TestProductId::class,
+                    'productId' => [
+                        'id' => $order->getLineItems()[0]->getProductId(),
+                        '__class__' => TestProductId::class,
                     ],
-                    "quantity" => $order->getLineItems()[0]->getQuantity(),
-                    "__class__" => TestOrderLineItem::class,
+                    'quantity' => $order->getLineItems()[0]->getQuantity(),
+                    '__class__' => TestOrderLineItem::class,
                 ],
                 1 => [
-                    "productId" => [
-                        "id" => $order->getLineItems()[1]->getProductId(),
-                        "__class__" => TestProductId::class,
+                    'productId' => [
+                        'id' => $order->getLineItems()[1]->getProductId(),
+                        '__class__' => TestProductId::class,
                     ],
-                    "quantity" => $order->getLineItems()[1]->getQuantity(),
-                    "__class__" => TestOrderLineItem::class,
+                    'quantity' => $order->getLineItems()[1]->getQuantity(),
+                    '__class__' => TestOrderLineItem::class,
                 ],
             ],
-            "__class__" => TestOrder::class,
+            '__class__' => TestOrder::class,
         ];
 
         $this->assertEquals($expected, $data);
