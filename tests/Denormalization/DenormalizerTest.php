@@ -2,7 +2,7 @@
 
 namespace Tests\Morebec\DomainNormalizer\Denormalization;
 
-use Morebec\DomainNormalizer\Denormalization\Configuration\AutomaticDenormalizerDefinition;
+use Morebec\DomainNormalizer\Denormalization\Configuration\AutomaticDenormalizationDefinition;
 use Morebec\DomainNormalizer\Denormalization\Configuration\DenormalizerConfiguration;
 use Morebec\DomainNormalizer\Denormalization\Configuration\ObjectDenormalizationDefinition;
 use Morebec\DomainNormalizer\Denormalization\Configuration\ObjectDenormalizationDefinitionFactory;
@@ -76,9 +76,9 @@ class DenormalizerTest extends TestCase
     {
         $config = new DenormalizerConfiguration();
 
-        $config->registerDefinition(new AutomaticDenormalizerDefinition(TestOrder::class));
-        $config->registerDefinition(new AutomaticDenormalizerDefinition(TestProductId::class));
-        $config->registerDefinition(new AutomaticDenormalizerDefinition(TestOrderLineItem::class));
+        $config->registerDefinition(new AutomaticDenormalizationDefinition(TestOrder::class));
+        $config->registerDefinition(new AutomaticDenormalizationDefinition(TestProductId::class));
+        $config->registerDefinition(new AutomaticDenormalizationDefinition(TestOrderLineItem::class));
 
         $denormalizer = new Denormalizer($config);
 
@@ -122,11 +122,11 @@ class DenormalizerTest extends TestCase
 
     public function testDenormalizeFromInterfaceDefinition(): void
     {
-                $config = new DenormalizerConfiguration();
+        $config = new DenormalizerConfiguration();
 
-        $config->registerDefinition(new AutomaticDenormalizerDefinition(TestOrderInterface::class));
-        $config->registerDefinition(new AutomaticDenormalizerDefinition(TestProductId::class));
-        $config->registerDefinition(new AutomaticDenormalizerDefinition(TestOrderLineItem::class));
+        $config->registerDefinition(new AutomaticDenormalizationDefinition(TestOrderInterface::class));
+        $config->registerDefinition(new AutomaticDenormalizationDefinition(TestProductId::class));
+        $config->registerDefinition(new AutomaticDenormalizationDefinition(TestOrderLineItem::class));
 
         $denormalizer = new Denormalizer($config);
 
@@ -155,8 +155,6 @@ class DenormalizerTest extends TestCase
         ];
 
         $object = $denormalizer->denormalize($data, TestOrderInterface::class);
-
-        dump($object);
 
         $this->assertInstanceOf(TestOrder::class, $object);
 

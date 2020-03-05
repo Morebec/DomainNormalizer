@@ -2,9 +2,9 @@
 
 namespace Morebec\DomainNormalizer\Denormalization;
 
-use Morebec\DomainNormalizer\Denormalization\Configuration\AutomaticDenormalizerDefinition;
-use Morebec\DomainNormalizer\Denormalization\Configuration\DenormalizerConfiguration;
+use Morebec\DomainNormalizer\Denormalization\Configuration\AutomaticDenormalizationDefinition;
 use Morebec\DomainNormalizer\Denormalization\Configuration\DenormalizationKeyDefinition;
+use Morebec\DomainNormalizer\Denormalization\Configuration\DenormalizerConfiguration;
 use Morebec\DomainNormalizer\Denormalization\Configuration\FluentDenormalizationKeyDefinition;
 use Morebec\DomainNormalizer\Denormalization\Exception\DenormalizationException;
 use Morebec\DomainNormalizer\ObjectManipulation\DoctrineInstantiator;
@@ -41,12 +41,14 @@ class Denormalizer
             throw DenormalizationException::ClassDefinitionNotFound($objectClass);
         }
 
+        $keyDefinitions = $def->getKeyDefinitions();
 
-        if ($def instanceof AutomaticDenormalizerDefinition) {
+        if ($def instanceof AutomaticDenormalizationDefinition) {
             $objectClass = $normalizedForm['__class__'];
-            $keyDefinitions = $this->getKeysForAutomaticDefinition($objectClass, $normalizedForm, $def);
-        } else {
-            $keyDefinitions = $def->getKeyDefinitions();
+            $keyDefinitions = array_merge(
+                $this->getKeysForAutomaticDefinition($objectClass, $normalizedForm, $def),
+                $keyDefinitions
+            );
         }
 
         $object = $this->objectInstantiator->instantiate($objectClass);
@@ -89,7 +91,7 @@ class Denormalizer
     private function getKeysForAutomaticDefinition(
         string $objectClass,
         array $normalizedForm,
-        AutomaticDenormalizerDefinition $def
+        AutomaticDenormalizationDefinition $def
     ): array {
         $r = new ReflectionClass($objectClass);
         $properties = [];
