@@ -2,7 +2,7 @@
 
 namespace Morebec\DomainNormalizer\Denormalization;
 
-use Morebec\DomainNormalizer\Denormalization\Configuration\AutomaticDenormalizerDefinition;
+use Morebec\DomainNormalizer\Denormalization\Configuration\AutomaticDenormalizationDefinition;
 use Morebec\DomainNormalizer\Denormalization\Configuration\DenormalizationKeyDefinition;
 use Morebec\DomainNormalizer\Denormalization\Configuration\DenormalizerConfiguration;
 use Morebec\DomainNormalizer\Denormalization\Configuration\FluentDenormalizationKeyDefinition;
@@ -43,7 +43,7 @@ class Denormalizer
 
         $keyDefinitions = $def->getKeyDefinitions();
 
-        if ($def instanceof AutomaticDenormalizerDefinition) {
+        if ($def instanceof AutomaticDenormalizationDefinition) {
             $objectClass = $normalizedForm['__class__'];
             $keyDefinitions = array_merge(
                 $this->getKeysForAutomaticDefinition($objectClass, $normalizedForm, $def),
@@ -91,7 +91,7 @@ class Denormalizer
     private function getKeysForAutomaticDefinition(
         string $objectClass,
         array $normalizedForm,
-        AutomaticDenormalizerDefinition $def
+        AutomaticDenormalizationDefinition $def
     ): array {
         $r = new ReflectionClass($objectClass);
         $properties = [];
