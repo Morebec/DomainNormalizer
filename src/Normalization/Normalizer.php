@@ -42,10 +42,12 @@ class Normalizer
 
         $normalizedForm = [];
 
+        $properties = $def->getProperties();
         if ($def instanceof AutomaticNormalizationDefinition) {
-            $properties = $this->getPropertiesForAutomaticDefinition($object, $def, $accessor);
-        } else {
-            $properties = $def->getProperties();
+            $properties = array_merge(
+                $this->getPropertiesForAutomaticDefinition($object, $def, $accessor),
+                $properties
+            );
         }
 
         /** @var NormalizedPropertyDefinition $propertyDefinition */

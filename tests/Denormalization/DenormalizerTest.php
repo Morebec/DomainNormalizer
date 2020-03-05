@@ -122,7 +122,7 @@ class DenormalizerTest extends TestCase
 
     public function testDenormalizeFromInterfaceDefinition(): void
     {
-                $config = new DenormalizerConfiguration();
+        $config = new DenormalizerConfiguration();
 
         $config->registerDefinition(new AutomaticDenormalizerDefinition(TestOrderInterface::class));
         $config->registerDefinition(new AutomaticDenormalizerDefinition(TestProductId::class));
@@ -155,8 +155,6 @@ class DenormalizerTest extends TestCase
         ];
 
         $object = $denormalizer->denormalize($data, TestOrderInterface::class);
-
-        dump($object);
 
         $this->assertInstanceOf(TestOrder::class, $object);
 
