@@ -2,7 +2,7 @@
 
 namespace Tests\Morebec\DomainNormalizer\TestClasses;
 
-class TestOrder
+class TestOrder implements TestOrderInterface
 {
     /** @var string */
     private $id;

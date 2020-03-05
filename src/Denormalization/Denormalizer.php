@@ -2,9 +2,9 @@
 
 namespace Morebec\DomainNormalizer\Denormalization;
 
-use Morebec\DomainNormalizer\Denormalization\Configuration\AutomaticDenormalizerDefinition;
-use Morebec\DomainNormalizer\Denormalization\Configuration\DenormalizationConfiguration;
+use Morebec\DomainNormalizer\Denormalization\Configuration\AutomaticDenormalizationDefinition;
 use Morebec\DomainNormalizer\Denormalization\Configuration\DenormalizationKeyDefinition;
+use Morebec\DomainNormalizer\Denormalization\Configuration\DenormalizerConfiguration;
 use Morebec\DomainNormalizer\Denormalization\Configuration\FluentDenormalizationKeyDefinition;
 use Morebec\DomainNormalizer\Denormalization\Exception\DenormalizationException;
 use Morebec\DomainNormalizer\ObjectManipulation\DoctrineInstantiator;
@@ -15,7 +15,7 @@ use ReflectionClass;
 class Denormalizer
 {
     /**
-     * @var DenormalizationConfiguration
+     * @var DenormalizerConfiguration
      */
     private $configuration;
 
@@ -24,7 +24,7 @@ class Denormalizer
      */
     private $objectInstantiator;
 
-    public function __construct(DenormalizationConfiguration $configuration)
+    public function __construct(DenormalizerConfiguration $configuration)
     {
         $this->configuration = $configuration;
         $this->objectInstantiator = new DoctrineInstantiator();
@@ -41,14 +41,18 @@ class Denormalizer
             throw DenormalizationException::ClassDefinitionNotFound($objectClass);
         }
 
+        $keyDefinitions = $def->getKeyDefinitions();
+
+        if ($def instanceof AutomaticDenormalizationDefinition) {
+            $objectClass = $normalizedForm['__class__'];
+            $keyDefinitions = array_merge(
+                $this->getKeysForAutomaticDefinition($objectClass, $normalizedForm, $def),
+                $keyDefinitions
+            );
+        }
+
         $object = $this->objectInstantiator->instantiate($objectClass);
         $accessor = ObjectAccessor::access($object);
-
-        if ($def instanceof AutomaticDenormalizerDefinition) {
-            $keyDefinitions = $this->getKeysForAutomaticDefinition($object, $normalizedForm, $def);
-        } else {
-            $keyDefinitions = $def->getKeyDefinitions();
-        }
 
         /** @var DenormalizationKeyDefinition $keyDef */
         foreach ($keyDefinitions as $keyDef) {
@@ -85,11 +89,11 @@ class Denormalizer
     }
 
     private function getKeysForAutomaticDefinition(
-        object $object,
+        string $objectClass,
         array $normalizedForm,
-        AutomaticDenormalizerDefinition $def
+        AutomaticDenormalizationDefinition $def
     ): array {
-        $r = new ReflectionClass($object);
+        $r = new ReflectionClass($objectClass);
         $properties = [];
         foreach ($r->getProperties() as $p) {
             $propertyName = $p->getName();
