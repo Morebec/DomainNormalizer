@@ -48,6 +48,11 @@ class Normalizer
                 $this->getPropertiesForAutomaticDefinition($object, $def, $accessor),
                 $properties
             );
+            $props = [];
+            foreach ($properties as $p) {
+                $props[$p->getPropertyName()] = $p;
+            }
+            $properties = $props;
         }
 
         /** @var NormalizedPropertyDefinition $propertyDefinition */

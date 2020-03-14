@@ -49,6 +49,13 @@ class Denormalizer
                 $this->getKeysForAutomaticDefinition($objectClass, $normalizedForm, $def),
                 $keyDefinitions
             );
+
+            $keys = [];
+            foreach ($keyDefinitions as $key) {
+                $keys[$key->getKeyName()] = $key;
+            }
+
+            $keyDefinitions = $keys;
         }
 
         $object = $this->objectInstantiator->instantiate($objectClass);
