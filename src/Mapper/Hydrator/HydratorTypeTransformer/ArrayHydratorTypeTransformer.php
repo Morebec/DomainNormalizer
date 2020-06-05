@@ -18,7 +18,7 @@ class ArrayHydratorTypeTransformer implements HydratorTypeTransformerInterface
                 $itemType = 'scalar';
             }
 
-            return $context->getHydrator()->hydrate($itemType, $d);
+            return $context->getHydrator()->hydrate($itemType, $d, $context);
         }, $context->getData());
     }
 

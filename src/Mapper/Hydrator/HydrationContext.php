@@ -14,15 +14,21 @@ class HydrationContext
 
     /** @var mixed */
     private $data;
+    /**
+     * @var HydrationContext|null
+     */
+    private $parentContext;
 
     public function __construct(
         HydratorInterface $hydrator,
         string $className,
-        $data
+        $data,
+        self $parentContext = null
     ) {
         $this->hydrator = $hydrator;
         $this->className = $className;
         $this->data = $data;
+        $this->parentContext = $parentContext;
     }
 
     public function getClassName(): string
@@ -41,5 +47,10 @@ class HydrationContext
     public function getHydrator(): HydratorInterface
     {
         return $this->hydrator;
+    }
+
+    public function getParentContext(): ?self
+    {
+        return $this->parentContext;
     }
 }

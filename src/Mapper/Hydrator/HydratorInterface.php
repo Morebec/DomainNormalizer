@@ -16,7 +16,7 @@ interface HydratorInterface
      *
      * @return mixed
      */
-    public function hydrate(string $className, $data);
+    public function hydrate(string $className, $data, HydrationContext $parentContext = null);
 
     /**
      * Register a custom hydrator.

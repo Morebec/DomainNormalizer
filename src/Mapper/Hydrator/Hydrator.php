@@ -47,9 +47,9 @@ class Hydrator implements HydratorInterface
      * @throws ReflectionException
      * @throws \PhpDocReader\AnnotationException
      */
-    public function hydrate(string $className, $data)
+    public function hydrate(string $className, $data, HydrationContext $parentContext = null)
     {
-        $hydrationContext = new HydrationContext($this, $className, $data);
+        $hydrationContext = new HydrationContext($this, $className, $data, $parentContext);
         if ($data === null) {
             return $this->builtInTransformers[NullHydratorTypeTransformer::TYPE_NAME]
                 ->transform($hydrationContext);

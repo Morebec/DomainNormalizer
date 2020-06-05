@@ -58,13 +58,16 @@ class ArrayToObjectReflectionTransformer implements HydratorTypeTransformerInter
         $accessor = ObjectAccessor::access($object);
 
         foreach ($data as $key => $value) {
+            $currentContext = ObjectHydrationContext::fromContext($context, $key);
+
             if (!\array_key_exists($key, $typedProperties)) {
                 throw new RuntimeException("Could not find property '$key' on class $className. Are you hydrating the right class?");
             }
+
             $typedProperty = $typedProperties[$key];
             /** @var VarType $type */
             $type = $typedProperty['type'];
-            $accessor->writeProperty($key, $hydrator->hydrate($type->getTypeNames()[0], $value));
+            $accessor->writeProperty($key, $hydrator->hydrate($type->getTypeNames()[0], $value, $currentContext));
         }
 
         return $object;
