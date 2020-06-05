@@ -21,9 +21,15 @@ class ArrayToObjectReflectionTransformer implements HydratorTypeTransformerInter
 {
     public const TYPE_NAME = 'object';
 
-    private AnnotationReader $annotationReader;
+    /**
+     * @var AnnotationReader
+     */
+    private $annotationReader;
 
-    private DoctrineInstantiator $instantiator;
+    /**
+     * @var DoctrineInstantiator
+     */
+    private $instantiator;
 
     public function __construct()
     {

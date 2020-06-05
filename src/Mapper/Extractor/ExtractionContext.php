@@ -11,11 +11,16 @@ class ExtractionContext
 
     /** @var mixed */
     private $data;
+    /**
+     * @var ExtractionContext
+     */
+    private $parentContext;
 
-    public function __construct(ExtractorInterface $extractor, $data)
+    public function __construct(ExtractorInterface $extractor, $data, ?self $parentContext = null)
     {
         $this->extractor = $extractor;
         $this->data = $data;
+        $this->parentContext = $parentContext;
     }
 
     /**
@@ -29,5 +34,10 @@ class ExtractionContext
     public function getExtractor(): ExtractorInterface
     {
         return $this->extractor;
+    }
+
+    public function getParentContext(): self
+    {
+        return $this->parentContext;
     }
 }

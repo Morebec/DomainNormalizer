@@ -6,8 +6,8 @@ use Morebec\DomainNormalizer\Mapper\Hydrator\HydrationContext;
 
 class CustomHydratorTypeTransformer implements HydratorTypeTransformerInterface
 {
-    private string $className;
-    private \Closure $closure;
+    private $className;
+    private $closure;
 
     public function __construct(string $className, \Closure $closure)
     {

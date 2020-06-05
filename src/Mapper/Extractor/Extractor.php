@@ -36,9 +36,9 @@ class Extractor implements ExtractorInterface
      *
      * @return mixed
      */
-    public function extract($v)
+    public function extract($v, ExtractionContext $parentContext = null)
     {
-        $context = new ExtractionContext($this, $v);
+        $context = new ExtractionContext($this, $v, $parentContext);
 
         if ($v === null) {
             return $this->builtInTransformers[NullExtractorTypeTransformer::TYPE_NAME]->transform($context);

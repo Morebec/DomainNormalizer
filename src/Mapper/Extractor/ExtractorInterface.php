@@ -17,7 +17,7 @@ interface ExtractorInterface
      *
      * @return mixed
      */
-    public function extract($v);
+    public function extract($v, ExtractionContext $parentContext = null);
 
     /**
      * Registers a new transformer.

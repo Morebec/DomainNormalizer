@@ -42,6 +42,20 @@ class Mapper implements MapperInterface
     }
 
     /**
+     * Maps an object to another class.
+     *
+     * @param $object
+     *
+     * @return mixed|object
+     */
+    public function map($object, string $destinationClass)
+    {
+        $data = $this->extract($object);
+
+        return $this->hydrate($destinationClass, $data);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function registerExtractionTypeTransformer(ExtractorTypeTransformerInterface $transformer): void

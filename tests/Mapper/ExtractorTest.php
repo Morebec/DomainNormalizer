@@ -2,6 +2,7 @@
 
 namespace Tests\Morebec\DomainNormalizer\Mapper;
 
+use Morebec\DomainNormalizer\Mapper\Extractor\ExtractionContext;
 use Morebec\DomainNormalizer\Mapper\Extractor\Extractor;
 use Morebec\DomainNormalizer\Mapper\Extractor\ExtractorTypeTransformer\CustomExtractorTypeTransformer;
 use PHPUnit\Framework\TestCase;
@@ -29,13 +30,16 @@ class ExtractorTest extends TestCase
             'message' => 'hello',
             'code' => 0,
             'file' => __FILE__,
-            'line' => 27
+            'line' => 28
         ], $extracted);
 
         // Custom Type Transformer
-        $extractor->registerTransformer(new CustomExtractorTypeTransformer(TestValueObject::class, static function ($v, Extractor $mapper) {
-            return (string)$v;
-        }));
+        $extractor->registerTransformer(new CustomExtractorTypeTransformer(
+            TestValueObject::class,
+            static function (ExtractionContext $context) {
+                return (string)$context->getData();
+            })
+        );
         $extracted = $extractor->extract(new TestValueObject('hello-world'));
         $this->assertEquals('hello-world', $extracted);
     }

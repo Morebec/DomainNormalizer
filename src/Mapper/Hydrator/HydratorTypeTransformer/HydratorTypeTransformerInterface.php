@@ -3,16 +3,11 @@
 namespace Morebec\DomainNormalizer\Mapper\Hydrator\HydratorTypeTransformer;
 
 use Morebec\DomainNormalizer\Mapper\Hydrator\HydrationContext;
-use Morebec\DomainNormalizer\Mapper\Hydrator\HydratorInterface;
 
 interface HydratorTypeTransformerInterface
 {
     /**
      * Transforms a value v.
-     *
-     * @param string $className
-     * @param $data
-     * @param HydratorInterface $hydrator
      *
      * @return mixed
      */

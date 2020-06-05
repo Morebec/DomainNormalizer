@@ -24,10 +24,7 @@ class CustomExtractorTypeTransformer implements ExtractorTypeTransformerInterfac
 
     public function transform(ExtractionContext $context)
     {
-        $v = $context->getData();
-        $extractor = $context->getExtractor();
-
-        return ($this->closure)($v, $extractor);
+        return ($this->closure)($context);
     }
 
     public function getTypeName(): string
