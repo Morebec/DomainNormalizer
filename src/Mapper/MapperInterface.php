@@ -21,7 +21,22 @@ interface MapperInterface
      */
     public function hydrate(string $className, $data);
 
+    /**
+     * Maps an object to another class.
+     *
+     * @param $object
+     *
+     * @return mixed
+     */
+    public function map($object, string $destinationClass);
+
+    /**
+     * Registers an extraction type transformer.
+     */
     public function registerExtractionTypeTransformer(ExtractorTypeTransformerInterface $transformer): void;
 
+    /**
+     * Registers ane xtraction tytpe transformer.
+     */
     public function registerHydrationTypeTransformer(HydratorTypeTransformerInterface $transformer): void;
 }

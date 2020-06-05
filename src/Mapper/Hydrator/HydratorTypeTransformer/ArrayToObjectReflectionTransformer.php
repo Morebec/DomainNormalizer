@@ -91,13 +91,12 @@ class ArrayToObjectReflectionTransformer implements HydratorTypeTransformerInter
      */
     public function detectTypes(ReflectionClass $class): array
     {
-        $annotationReader = $this->annotationReader;
         $classProperties = $class->getProperties();
 
         $props = [];
 
         foreach ($classProperties as $classProperty) {
-            $type = $annotationReader->getPropertyType($classProperty);
+            $type = $this->annotationReader->getPropertyType($classProperty);
             if (!$type) {
                 throw new RuntimeException("Could not detect type of {$classProperty->getName()} on {$class->getName()}");
             }

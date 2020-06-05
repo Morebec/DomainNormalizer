@@ -13,6 +13,9 @@ class TestOrder implements TestOrderInterface
     /** @var TestOrderLineItem[] */
     private $lineItems;
 
+    /** @var TestOrderLineItem|null */
+    private $nullableProperty;
+
     public function __construct()
     {
         $this->id = uniqid('id', true);

@@ -20,8 +20,9 @@ class AnnotationReader
      */
     private $parser;
 
-    private $scalarTypes = [
+    private $builtInTypes = [
         'bool',
+        'null',
         'boolean',
         'string',
         'int',
@@ -56,27 +57,37 @@ class AnnotationReader
      * Parse the docblock of the property to get the class of the var annotation.
      *
      * @throws AnnotationException
-     *
-     * @return string|null Type of the property (content of var annotation)
      */
-    public function getPropertyType(ReflectionProperty $property)
+    public function getPropertyType(ReflectionProperty $property): ?string
     {
         // Get the content of the @var annotation
         if (preg_match('/@var\s+([^\s]+)/', $property->getDocComment(), $matches)) {
-            list(, $type) = $matches;
+            list(, $typeString) = $matches;
         } else {
             return null;
         }
 
-        // Ignore primitive types
-        if (\in_array($type, $this->scalarTypes)) {
-            return $type;
+        $types = explode('|', $typeString);
+
+        $returnTypes = [];
+
+        foreach ($types as $typeString) {
+            $returnTypes[] = $this->resolveType($typeString, $property);
         }
 
-        // Ignore types containing special characters ([], <> ...)
-        /*        if (! preg_match('/^[a-zA-Z0-9\\\\_]+$/', $type)) {
-                    return null;
-                }*/
+        return implode('|', $returnTypes);
+    }
+
+    /**
+     * @return string
+     *
+     * @throws AnnotationException
+     */
+    private function resolveType(string $type, ReflectionProperty $property)
+    {
+        if (\in_array($type, $this->builtInTypes)) {
+            return $type;
+        }
 
         $appendArray = strpos($type, '[]') !== false;
         $type = str_replace('[]', '', $type);
