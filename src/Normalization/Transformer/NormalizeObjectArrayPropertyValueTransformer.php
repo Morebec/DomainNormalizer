@@ -13,8 +13,10 @@ class NormalizeObjectArrayPropertyValueTransformer extends NormalizeObjectProper
     public function transform(NormalizationContext $context)
     {
         $value = $context->getValue();
-        if (!\is_array($value)) {
-            throw NormalizationException::CannotNormalizeNonObjectToClass($context, 'array', $this->className);
+        if (!\is_array($value) && !is_iterable($value)) {
+            $valueType = \gettype($value);
+            $displayType = $valueType === 'object' ? \get_class($value) : $valueType;
+            throw NormalizationException::CannotNormalizeNonObjectToClass($context, $displayType, 'iterable');
         }
 
         $ret = [];

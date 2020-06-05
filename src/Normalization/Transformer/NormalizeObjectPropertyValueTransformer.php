@@ -43,7 +43,7 @@ class NormalizeObjectPropertyValueTransformer implements PropertyValueTransforme
 
         $valueClass = \get_class($value);
 
-        if ($valueClass !== $this->className) {
+        if (!is_a($valueClass, $this->className, true)) {
             throw NormalizationException::UnexpectedPropertyValueClass($context, $valueClass, $this->className);
         }
 

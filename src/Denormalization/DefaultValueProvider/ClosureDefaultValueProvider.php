@@ -20,6 +20,6 @@ class ClosureDefaultValueProvider implements DefaultValueProviderInterface
     {
         $c = $this->closure;
 
-        return $c();
+        return $c($context);
     }
 }

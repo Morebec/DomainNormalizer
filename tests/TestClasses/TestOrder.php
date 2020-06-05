@@ -10,7 +10,7 @@ class TestOrder implements TestOrderInterface
     /** @var int */
     private $createdAt;
 
-    /** @var array<TestOrderLineItem> */
+    /** @var TestOrderLineItem[] */
     private $lineItems;
 
     public function __construct()

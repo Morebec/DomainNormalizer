@@ -23,7 +23,7 @@ class DenormalizerTest extends TestCase
         $config->registerDefinition(ObjectDenormalizationDefinitionFactory::forClass(
             TestOrder::class,
             static function (ObjectDenormalizationDefinition $d) {
-                $d->key('ID')->renamedTo('id');
+                $d->key('ID')->renamedTo('id')->defaultValue('DEFAULT_ID');
                 $d->key('createdAt')->as(static function (DenormalizationContext $context) {
                     return strtotime($context->getValue());
                 });
@@ -44,7 +44,7 @@ class DenormalizerTest extends TestCase
         $denormalizer = new Denormalizer($config);
 
         $data = [
-            'ID' => uniqid('', true),
+            // 'ID' => uniqid('', true), // DEFAULT VALUE
             'createdAt' => (new \DateTime())->format('Y-m-d'),
             'lineItems' => [
                 [
@@ -62,7 +62,7 @@ class DenormalizerTest extends TestCase
         /** @var TestOrder $object */
         $object = $denormalizer->denormalize($data, TestOrder::class);
 
-        $this->assertEquals($data['ID'], $object->getId());
+        $this->assertEquals('DEFAULT_ID', $object->getId());
         $this->assertEquals(strtotime($data['createdAt']), $object->getCreatedAt());
         $this->assertCount(2, $object->getLineItems());
         $this->assertEquals($data['lineItems'][0]['productId'], $object->getLineItems()[0]->getProductId());
