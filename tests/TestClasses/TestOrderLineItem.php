@@ -5,9 +5,10 @@ namespace Tests\Morebec\DomainNormalizer\TestClasses;
 class TestOrderLineItem
 {
     /**
-     * @var string
+     * @var TestProductId
      */
     private $productId;
+
     /**
      * @var int
      */

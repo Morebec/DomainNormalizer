@@ -62,7 +62,7 @@ class DenormalizerTest extends TestCase
         /** @var TestOrder $object */
         $object = $denormalizer->denormalize($data, TestOrder::class);
 
-        $this->assertEquals($data['ID'], 'DEFAULT_ID');
+        $this->assertEquals('DEFAULT_ID', $object->getId());
         $this->assertEquals(strtotime($data['createdAt']), $object->getCreatedAt());
         $this->assertCount(2, $object->getLineItems());
         $this->assertEquals($data['lineItems'][0]['productId'], $object->getLineItems()[0]->getProductId());

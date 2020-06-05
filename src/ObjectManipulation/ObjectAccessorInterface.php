@@ -30,4 +30,9 @@ interface ObjectAccessorInterface
      * has a certain property.
      */
     public function hasProperty(string $propertyName): bool;
+
+    /**
+     * Returns the list of all property names.
+     */
+    public function getProperties(): array;
 }

@@ -14,8 +14,8 @@ class NormalizeObjectArrayPropertyValueTransformer extends NormalizeObjectProper
     {
         $value = $context->getValue();
         if (!\is_array($value) && !is_iterable($value)) {
-            $valueType = gettype($value);
-            $displayType = $valueType === 'object' ? get_class($value) : $valueType;
+            $valueType = \gettype($value);
+            $displayType = $valueType === 'object' ? \get_class($value) : $valueType;
             throw NormalizationException::CannotNormalizeNonObjectToClass($context, $displayType, 'iterable');
         }
 

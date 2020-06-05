@@ -50,7 +50,7 @@ class ObjectAccessor implements ObjectAccessorInterface
         $this->writer = function ($object, $propertyName, $value) {
             Closure::bind(function () use ($propertyName, $value) {
                 if (!property_exists($this, $propertyName)) {
-                    $class = \get_class($this);
+                    $class = static::class;
                     $implode = implode(', ', array_keys(get_class_vars($class)));
                     throw new TypeError("Property '$propertyName' does not exist in class '$class'. Available properties are ".$implode);
                 }
@@ -114,5 +114,20 @@ class ObjectAccessor implements ObjectAccessorInterface
     public function hasProperty(string $propertyName): bool
     {
         return property_exists($this->object, $propertyName);
+    }
+
+    public function getProperties(): array
+    {
+        $reader = function &($object) {
+            $value = &Closure::bind(function &() {
+                $props = array_keys(get_object_vars($this));
+
+                return $props;
+            }, $object, $object)->__invoke();
+
+            return $value;
+        };
+
+        return $reader($this->object);
     }
 }
