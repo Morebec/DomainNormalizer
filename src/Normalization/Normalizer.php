@@ -27,9 +27,11 @@ class Normalizer
     /**
      * Normalizes an object.
      *
-     * @param $object
+     * @param mixed
+     *
+     * @throws ReflectionException
      */
-    public function normalize(object $object): array
+    public function normalize($object): array
     {
         $objectClass = \get_class($object);
         $def = $this->configuration->getDefinitionForClass($objectClass);
@@ -76,12 +78,12 @@ class Normalizer
     }
 
     /**
-     * @param $def
+     * @param object $object
      *
      * @throws ReflectionException
      */
     private function getPropertiesForAutomaticDefinition(
-        object $object,
+        $object,
         AutomaticNormalizationDefinition $def,
         ObjectAccessorInterface $accessor
     ): array {

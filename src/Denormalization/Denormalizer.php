@@ -32,8 +32,10 @@ class Denormalizer
 
     /**
      * Denormalizes an normalized formed to an object instance.
+     *
+     * @return mixed
      */
-    public function denormalize(array $normalizedForm, string $objectClass): object
+    public function denormalize(array $normalizedForm, string $objectClass)
     {
         $def = $this->configuration->getDefinitionForClass($objectClass);
 
